@@ -22,21 +22,23 @@ function Aside() {
     // if (link == "/complaint") FetchAllComplaints(dispatch);
     dispatch(setActiveTab(index));
   };
-  
-  const { username } = useSelector((state: RootState) => state.User.SignInData);
+
+  const { WSSC_CODE }: any = useSelector(
+    (state: RootState) => state.User.SignInData
+  );
 
   return (
     <div>
-      {username ? (
+      {WSSC_CODE ? (
         <aside className="h-screen w-[250px] fixed shadow bg-slate-50 border-r">
           <ul className=" mt-4 w-full">
             {items.map((item, index) => (
               <li
                 key={index}
                 onClick={() => clickHander(item.to, index)}
-                className={` py-3 flex w-full justify-start cursor-pointer items-center transition-all rounded-tl-lg rounded-bl-lg ${
+                className={` py-3 flex w-full justify-start cursor-pointer items-center transition-all  ${
                   activeTab.index === index
-                    ? "bg-primaryColor-500 font-semibold tracking-wide text-gray-50 border-primaryColor-500"
+                    ? "bg-primaryColor-300 font-semibold tracking-wide text-feedbackColor border-primaryColor-300"
                     : ""
                 }`}
               >
