@@ -24,6 +24,8 @@ const patternRule: ValidationRule<RegExp> = {
 const SignUp = ({ setAuthState }: Prop) => {
   const [showPassword, setshowPassword] = useState(false);
   const [confirmPassword, setconfirmPassword] = useState(false);
+  const [wssc_code, setWSSC] = useState("");
+
   const { UserInfo, pending, error }: any = useSelector(
     (state: RootState) => state.users
   );
@@ -39,22 +41,21 @@ const SignUp = ({ setAuthState }: Prop) => {
 
   const onSubmit = async (data: UserSubmitForm) => {
     const { phone, username, password } = data;
-  
     const status = await RegisterUser(
-      { phone, name: username, password },
+      { phone, name: username, password, wssc_code },
       dispatch
-    );    
-    if(status == 200) {
-      setAuthState("Signin")
-       reset();
+    );
+    if (status == 200) {
+      setAuthState("Signin");
+      reset();
     }
   };
 
   // ------- TSX Section --------------
   return (
     <>
-      <div className="flex items-center justify-center h-screen w-full">
-        <div className="flex justify-center flex-col w-[80%] sm:w-[40%] ">
+      <div className="flex items-center justify-center  w-full px-0 md:px-20 lg:px-20 xl:px-20">
+        <div className="flex justify-center flex-col w-full ">
           <div className="flex flex-col items-center justify-center gap-4">
             <Image src={logo} className="w-40" alt="Wsscm-logo" priority />
             <p className="text-md text-gray-500 font-semibold text-center">
@@ -176,7 +177,21 @@ const SignUp = ({ setAuthState }: Prop) => {
                 {errors.confirmPassword?.message}
               </div>
             </div>
-
+            {/* select the one of the wssc according to the citizen location */}
+            <label htmlFor="underline_select" className="sr-only block">
+              Select your residential area
+            </label>
+            <select
+              id="underline_select"
+              className="block py-2 px-3 overflow-hidden  w-[70%] text-sm text-gray-400 shadow-b-sm  bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-gray-200 peer"
+              onChange={(e) => setWSSC(e.target.value)}
+            >
+              <option selected>Select your residential area </option>
+              <option value="wsscp25001">Peshawar</option>
+              <option value="wsscm23200">Mardan</option>
+              <option value="wssck26010">Kohat</option>
+              <option value="wsscs19090">Swat</option>
+            </select>
             {/* ---------------------- Submit form button ------------------ */}
             <div className="flex justify-center mt-10">
               <button

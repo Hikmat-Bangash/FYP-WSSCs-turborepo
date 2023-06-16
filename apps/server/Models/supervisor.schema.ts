@@ -21,6 +21,8 @@ const SupervisorSchema = new mongoose.Schema(
       type: String,
       required: [true, "Password is required!"],
     },
+    isDeleted: { type: Boolean, default: false },
+    profile_image: { type: String },
   },
   { timestamps: true }
 );

@@ -2,7 +2,11 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import UserReducer from "./UserSlice";
 import TabReducer from "./TabSlice";
+import SupervisorReducer from "./supervisorSlice";
 import ComplaintReducer from "./complatintSlice";
+import SuprvsorReducer from "./Supervisor-ApiCalls/ApiCalls/supervisorSlice/AuthSlice";
+import SupervisorComplaints from './Supervisor-ApiCalls/ApiCalls/supervisorSlice/supervisorComplaintsSlice'
+import StatisticReducer  from "./WSSC_Slice";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 import {
   persistReducer,
@@ -37,12 +41,17 @@ const persistConfig = {
   key: "root",
   version: 1,
   storage,
+  blacklist: ["Tab", "Complaint", "Supervisor", "SupervisorReducer", "supervisorComplaints", "StatisticReducer" ],
 };
 
 const reducer = combineReducers({
   User: UserReducer,
+  suprvisor: SuprvsorReducer,
   Tab: TabReducer,
   Complaint: ComplaintReducer,
+  Supervisor: SupervisorReducer,
+  supervisorComplaints: SupervisorComplaints,
+  statistics: StatisticReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);

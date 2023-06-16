@@ -13,9 +13,8 @@ import {
 import { config } from "./config";
 import { ComplainForm } from "@/@types/complainForm.types";
 
-const API = axios.create({ baseURL: "http://localhost:7000" });
+export const API = axios.create({ baseURL: "http://localhost:7000" });
 // const API = axios.create({ baseURL: "https://fyp-wssc-backend-production.up.railway.app" });
-
 
 // Citizen feedback
 export const CreateFeedback = async (
@@ -23,19 +22,15 @@ export const CreateFeedback = async (
   feedback: any,
   dispatch: any
 ): Promise<any> => {
-  console.log("start");
   dispatch(FeedbackStart());
-  console.log("started");
   try {
-    console.log("try");
     console.log(feedback);
     const res = await API.patch(
-      `api/v1/complaints/${complaintId}`,
+      `api/v1/complaints/feedback/${complaintId}`,
       feedback,
       config
     );
     console.log(res);
-    console.log("feedback updated");
     dispatch(FeedbackSuccess());
     return res.data;
   } catch (error: any) {
@@ -71,7 +66,7 @@ export const CreateComplaint = async (
   // calling API to create complaint in database
   try {
     const res = await API.post(
-      `api/v1/complaints/${userId}`,
+      `api/v1/complaints`,
       {
         userId,
         userName,
@@ -84,6 +79,7 @@ export const CreateComplaint = async (
       },
       config
     );
+    console.log(`this is complaintApi console: ${res.data}`);
     dispatch(NewComplaintSuccess(res.data.CreateComplaint));
     return res.data;
   } catch (err: any) {
@@ -98,14 +94,10 @@ export const CreateComplaint = async (
 };
 
 // Fetching Complaints from Server
-export const FetchAllComplaints = async (
-  dispatch: any,
-  userId: any
-): Promise<any> => {
+export const FetchAllComplaints = async (dispatch: any): Promise<any> => {
   dispatch(GetComplaintsStart());
-  console.log(userId);
   try {
-    const res = await API.get(`api/v1/complaints/${userId}`, config);
+    const res = await API.get(`api/v1/complaints`, config);
     dispatch(GetComplaintsSuccess(res.data.allComplaints));
     return res.data;
   } catch (err: any) {

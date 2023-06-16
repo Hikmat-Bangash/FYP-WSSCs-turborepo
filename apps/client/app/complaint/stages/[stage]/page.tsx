@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import Image from "next/image";
 import garbage from "../../../../public/garbage.png";
 import { HiArrowLeft } from "react-icons/hi";
@@ -9,24 +9,33 @@ import { RootState } from "@/global_state/store";
 import Complaint from "@/components/Complaint";
 import { useDispatch } from "react-redux";
 import { complaintTypes } from "@/Types";
+import { FetchAllComplaints } from "@/global_state/ApiCalls/complaintApiCalls";
 
 const Complaints = ({ params }: any) => {
   let statesValue = params.stage;
+  const dispatch = useDispatch();
   const [states, setStates] = useState(statesValue);
   if (states === "Resolved") setStates("Closed");
+
+  useEffect(() => {
+    FetchAllComplaints(dispatch);
+  }, []);
+
   const complaintsAll = useSelector((state: RootState) => {
     return state.complaints.complaintsAll;
   });
-  console.log(complaintsAll);
   const { UserInfo }: any = useSelector((state: RootState) => state.users);
 
   // JSX section
   return (
-    <>
+    <div className="w-[365px] sm:w-[450px] md:w-full lg-full xl-w-full">
       {UserInfo?.phone ? (
-        <div className="mt-20 mx-3">
-          <div className="flex items-center justify-between">
-            <Link href="/">
+        <>
+          <div className="flex items-center justify-between mb-4">
+            <Link
+              href="/"
+              className="p-2 hover:bg-gray-100 active:bg-gray-200 rounded-full transition-all cursor-pointer"
+            >
               <HiArrowLeft className="text-[28px] text-primaryColor-500" />
             </Link>
             <h3 className="text-md -ml-5 px-2 py-1 rounded-md bg-feedbackColor text-white font-bold">
@@ -134,11 +143,11 @@ const Complaints = ({ params }: any) => {
               )
             )}
           </div>
-        </div>
+        </>
       ) : (
         ""
       )}
-    </>
+    </div>
   );
 };
 

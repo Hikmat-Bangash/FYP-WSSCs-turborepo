@@ -73,49 +73,49 @@ const ProfileMenu = ({ menuActive, setMenuActive }: Props) => {
           <Link
             href={`/profile/${_id}`}
             onClick={() => setMenuActive(!menuActive)}
-            className="flex items-center gap-2 text-md"
+            className="flex items-center gap-2 text-md font-semibold"
           >
-            <BiUserCircle className="text-[28px] text-primaryColor-500" />
+            <BiUserCircle className="text-[24px] text-primaryColor-500" />
             <span className="text-gray-700">View Profile</span>
           </Link>
 
           <button
-            className="flex items-center gap-2 text-md"
+            className="flex items-center gap-2 text-md font-semibold"
             onClick={() => setsharePop(!sharePop)}
           >
-            <FiShare2 className="text-[24px] text-primaryColor-500" />
-            <span className="text-gray-700">Share App</span>
+            <FiShare2 className="text-[20px] text-primaryColor-500" />
+            <span className="text-gray-700 ml-1">Share App</span>
           </button>
 
           <button
             onClick={() => NotifyTost()}
-            className="flex items-center gap-2 text-md"
+            className="flex items-center gap-2 text-md font-semibold"
           >
-            <MdOutlineContactPhone className="text-[24px] text-primaryColor-500" />
-            <span className="text-gray-700">Contact us</span>
+            <MdOutlineContactPhone className="text-[20px] text-primaryColor-500" />
+            <span className="text-gray-700 ml-1">Contact us</span>
           </button>
           <button
             onClick={() => NotifyTost()}
-            className="flex items-center gap-2 text-md"
+            className="flex items-center gap-2 text-md font-semibold"
           >
-            <MdOutlinePrivacyTip className="text-[28px] text-primaryColor-500" />
+            <MdOutlinePrivacyTip className="text-[24px] text-primaryColor-500" />
             <span className="text-gray-700">Privacy and Policy</span>
           </button>
 
           <button
             onClick={() => NotifyTost()}
-            className="flex items-center gap-2 text-md"
+            className="flex items-center gap-2 text-md font-semibold"
           >
-            <AiOutlineFileProtect className="text-[28px] text-primaryColor-500" />
+            <AiOutlineFileProtect className="text-[24px] text-primaryColor-500" />
             <span className="text-gray-700">Terms and Conditions</span>
           </button>
         </div>
 
         <button
           onClick={LogOut}
-          className="flex items-center gap-2 text-md -mt-4"
+          className="flex items-center gap-2 text-md -mt-4 font-semibold"
         >
-          <TbLogout className="text-[28px] text-primaryColor-500" />
+          <TbLogout className="text-[24px] text-primaryColor-500" />
           <span className="text-gray-700">Log out</span>
         </button>
       </div>

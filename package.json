@@ -19,11 +19,15 @@
     "packages/*"
   ],
   "dependencies": {
+    "@novu/notification-center": "^0.16.0",
     "moment": "^2.29.4",
     "next-videos": "^1.4.1",
+    "react-countup": "^6.4.2",
     "react-hook-form": "^7.44.2",
     "react-hooks-yup-form": "^0.1.5",
     "react-icons": "^4.8.0",
+    "react-loader-spinner": "^5.3.4",
+    "react-rating": "^2.0.5",
     "redux-persist": "^6.0.0"
   }
 }

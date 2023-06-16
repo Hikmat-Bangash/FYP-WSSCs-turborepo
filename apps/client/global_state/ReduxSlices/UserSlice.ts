@@ -7,6 +7,7 @@ export interface user {
   name?: string;
   phone?: string;
   email?: string;
+  wssc_code?: string;
   address?: string;
   password?: string;
 }
@@ -27,7 +28,6 @@ export const UserSlice = createSlice({
     SignInSuccess: (state, action) => {
       state.pending = false;
       state.UserInfo = action.payload;
-      localStorage.setItem("Profile", JSON.stringify({ ...action?.payload }));
       toast.success("Signed in successfully", {
         position: "top-center",
         style: { width: "auto", height: "auto" },
@@ -80,7 +80,7 @@ export const UserSlice = createSlice({
         position: "top-center",
         style: { width: "auto", height: "auto" },
         duration: 3000,
-        });
+      });
     },
 
     // changing password actions
@@ -141,6 +141,6 @@ export const {
   ChangingPasswordError,
   DeleteAccountStart,
   DeleteAccountSuccess,
-  DeleteAccountError
+  DeleteAccountError,
 } = UserSlice.actions;
 export default UserSlice.reducer;

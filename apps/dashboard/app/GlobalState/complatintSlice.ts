@@ -3,42 +3,48 @@
 // import { complaintTypes } from "@/types";
 import { createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-hot-toast";
-import { ComplainForm } from "@/@types/complainForm.types";
-
-interface complaintTypes {
-  _id: string;
-  phone: string;
-  userName: string;
-  userId: string;
-  complaintType: string;
-  complaintAddress: string;
-  complaintDes: string;
-  wsscStatement: string;
-  ImageUrl: string;
-  feedback: any;
-  VideoUrl: string;
-  status: any;
-  createdAt: string;
-}
+import { complaintTypes } from "@/@types/complaintTypes.types";
 
 const complaintSlice = createSlice({
   name: "complaint",
   initialState: {
     complaintsAll: <complaintTypes[]>(<unknown>[]),
     newComplaint: [],
+    complaint: <complaintTypes>{},
+    supervisorComplaints: <complaintTypes[]>(<unknown>[]),
     loading: false,
     error: false,
   },
   reducers: {
     //  Fetching all complaints data
-    GetComplaintsStart: (state) => {
+    ApiRequestStart: (state) => {
       state.loading = true;
     },
     GetComplaintsSuccess: (state, action) => {
       state.loading = false;
       state.complaintsAll = action.payload;
     },
-    GetComplaintsError: (state, action) => {
+
+    // Get specific supervisor complaints
+    GetSupervisorComplaintsSuccess: (state, action) => {
+      state.loading = false;
+      state.supervisorComplaints = action.payload;
+    },
+
+    // Assign complaint to supervisor
+    AssignComplaintSuccess: (state) => {
+      state.loading = false;
+    },
+
+    AddStatementSuccess: (state, action) => {
+      state.loading = false;
+      state.complaint.wsscStatement = action.payload;
+    },
+    GetSingleComplaintSuccess: (state, action) => {
+      state.loading = false;
+      state.complaint = action.payload;
+    },
+    APIRequestError: (state, action) => {
       state.error = true;
       toast.error(action.payload, {
         position: "top-center",
@@ -49,6 +55,13 @@ const complaintSlice = createSlice({
   },
 });
 
-export const { GetComplaintsError, GetComplaintsStart, GetComplaintsSuccess } =
-  complaintSlice.actions;
+export const {
+  ApiRequestStart,
+  GetComplaintsSuccess,
+  AssignComplaintSuccess,
+  AddStatementSuccess,
+  GetSingleComplaintSuccess,
+  GetSupervisorComplaintsSuccess,
+  APIRequestError,
+} = complaintSlice.actions;
 export default complaintSlice.reducer;

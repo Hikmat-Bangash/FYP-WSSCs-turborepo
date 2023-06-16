@@ -6,18 +6,33 @@ import {
   GetAllComplaints,
   DeleteAllcomplaints,
   CitizenFeedback,
+  AssignComplaint,
+  GetSupervisorComplaints,
+  AddStatement,
+  SupervisorResponse,
 } from "../controller/Complaint.controller";
-import { verifyAdmin, verifyUser } from "../middleware/verifyToken";
+import { verifyAdmin, verifyToken } from "../middleware/verifyToken";
 
 const ComplaintRouter: Router = Router();
 
+ComplaintRouter.route("/").get(verifyToken, GetAllComplaints);
+
 ComplaintRouter.route("/:id")
-  .get(verifyUser, GetAllComplaints)
-  .get(GetComplaint)
-  .patch(CitizenFeedback)
-  .patch(verifyAdmin, UpdateComplaint)
-  .post(verifyUser, CreateComplaint)
+  .get(verifyToken, GetComplaint)
+  .patch(verifyToken, AddStatement)
   .delete(verifyAdmin, DeleteAllcomplaints);
+
+ComplaintRouter.post("/", verifyToken, CreateComplaint);
+ComplaintRouter.patch("/feedback/:id", verifyToken, CitizenFeedback);
+ComplaintRouter.patch("/response/:id", verifyToken, SupervisorResponse);
+
+ComplaintRouter.get("/supervisor/:id", verifyToken, GetSupervisorComplaints);
+
+// ASSIGN COMPLAINT ROUTE
+ComplaintRouter.route("/:supervisorId/:complaintId").patch(
+  // verifyToken,
+  AssignComplaint
+);
 
 ComplaintRouter;
 

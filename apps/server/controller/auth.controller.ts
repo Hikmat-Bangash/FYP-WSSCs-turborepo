@@ -9,10 +9,14 @@ import {
   SignUp_validate,
 } from "../Schema_validation/Auth_Validation";
 import dotenv from "dotenv";
+import { Novu } from "@novu/node";
+
 dotenv.config();
 
 // eslint-disable-next-line turbo/no-undeclared-env-vars
 const SECRET_KEY: any = process.env.JWT_KEY;
+
+const novu = new Novu(`${process.env.NOVU_KEY}`);
 
 export const SignUp = async (
   req: Request,
@@ -24,7 +28,7 @@ export const SignUp = async (
   // below statement will call if there is data not valid
   if (error) return res.send(error.details[0].message);
 
-  const { name, phone, password }: any = req.body;
+  const { name, phone, password, wssc_code }: any = req.body;
   // encrypt password by using bcrypt algorithm
   const salt: string = bcrypt.genSaltSync(10);
   const hash: string = bcrypt.hashSync(password, salt);
@@ -41,9 +45,11 @@ export const SignUp = async (
       const createUser = new citizenModel({
         name: name,
         phone: phone,
+        wssc_code,
         password: hash,
       });
       await createUser.save();
+
       res.status(200).json(createUser);
     } else {
       res.status(400).send("This phone number has already registered!");
@@ -95,7 +101,12 @@ export const SignIn = async (
       });
     // if the user credential is okay then we assign/send jwt token for authentication and authorization
     const token: string = jwt.sign(
-      { id: User._id, name: User.name, phone: User.phone },
+      {
+        id: User._id,
+        name: User.name,
+        phone: User.phone,
+        orgCode: User.wssc_code,
+      },
       SECRET_KEY
     );
 

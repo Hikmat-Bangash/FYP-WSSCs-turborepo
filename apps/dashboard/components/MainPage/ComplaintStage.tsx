@@ -1,98 +1,33 @@
-// import React from "react";
-// import ReactApexChart from "react-apexcharts";
-
-// const ComplaintStage = () => {
-//   const series = [
-//     {
-//       data: [21, 22, 10, 28],
-//     },
-//   ];
-//   const colors = [
-//     "#008FFB",
-//     "#00E396",
-//     "#FEB019",
-//     "#FF4560",
-//     // "#775DD0",
-//     // "#546E7A",
-//     // "#26A69A",
-//     // "#D10CE8",
-//   ];
-
-//   const options = {
-//     chart: {
-//       height: 250,
-//       type: "bar",
-//       events: {
-//         click: function ({ chart, w, e }: any) {
-//           // console.log(chart, w, e)
-//         },
-//       },
-//     },
-//     colors: colors,
-//     plotOptions: {
-//       bar: {
-//         columnWidth: "45%",
-//         distributed: true,
-//       },
-//     },
-//     dataLabels: {
-//       enabled: false,
-//     },
-//     legend: {
-//       show: false,
-//     },
-//     xaxis: {
-//       categories: [
-//             "completed",
-//             "closed",
-//             "Delay",
-//             "In progress",
-          
-//       ],
-//       labels: {
-//         style: {
-//           colors: colors,
-//           fontSize: "12px",
-//         },
-//       },
-//     },
-//   };
-
-//   return (
-//     <div id="chart">
-//       <ReactApexChart
-//         options={options}
-//         series={series}
-//         type="bar"
-//               height={250}
-//               width={380}
-//       />
-//     </div>
-//   );
-// };
-
-// export default ComplaintStage;
-
+"use client";
+import { RootState } from "@/app/GlobalState/store";
 import React from "react";
 import ReactApexChart from "react-apexcharts";
+import { useSelector } from "react-redux";
 
-const ApexChart: React.FC = () => {
+type Props = {
+  complaints: any;
+};
+
+const ApexChart = () => {
+  const complaints: any = useSelector(
+    (state: RootState) => state.statistics.complaints
+  );
   const series = [
     {
       name: "Solid waste",
-      data: [58, 35, 41, 47],
+      data: [complaints?.solidWaste, 0, 0, 0],
     },
     {
       name: "Water sanitation",
-      data: [13, 23, 20, 8],
+      data: [complaints?.waterSanitation, 0, 0, 0],
     },
     {
       name: "Staff related",
-      data: [11, 17, 15, 15],
+      data: [complaints?.Staff, 0, 0, 0],
     },
     {
       name: "Other complaint",
-      data: [21, 7, 25, 13],
+      data: [complaints?.Other, 0, 0, 0],
     },
   ];
 
@@ -138,10 +73,10 @@ const ApexChart: React.FC = () => {
     xaxis: {
       type: "datetime",
       categories: [
-        "03/15/2023 GMT",
-        "04/15/2023 GMT",
-        "05/15/2023 GMT",
-        "06/15/2023 GMT",
+        "06/1/2023 GMT",
+        "07/1/2023 GMT",
+        "08/1/2023 GMT",
+        "09/1/2023 GMT",
       ],
     },
     legend: {
@@ -149,7 +84,7 @@ const ApexChart: React.FC = () => {
       offsetY: 40,
     },
     fill: {
-      opacity: 1,
+      opacity: 0.8,
     },
   };
 
@@ -159,8 +94,8 @@ const ApexChart: React.FC = () => {
         options={options}
         series={series}
         type="bar"
-        height={250}
-        width={450}
+        height={240}
+        width={430}
       />
     </div>
   );

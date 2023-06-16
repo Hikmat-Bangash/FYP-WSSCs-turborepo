@@ -1,6 +1,7 @@
 'use client'
 import React from "react";
 import { PieChart, Pie, Cell, Tooltip } from "recharts";
+import CountUp from "react-countup";
 
 interface DataItem {
   name: string;
@@ -10,17 +11,18 @@ interface DataItem {
 
 const RADIAN = Math.PI / 180;
 const data: DataItem[] = [
-  { name: "A", value: 20, color: "#ff0000" },
-  { name: "B", value: 20, color: "#FFEF00" },
-  { name: "C", value: 20, color: "#ec4899" },
-  { name: "B", value: 20, color: "#0000ff" },
-  { name: "C", value: 20, color: "#00ff00" },
+  { name: "A", value: 20, color: "rgb(253 224 71)" },
+  { name: "B", value: 20, color: "rgb(253 224 71)" },
+  { name: "C", value: 20, color: "rgb(253 224 71)" },
+  { name: "B", value: 20, color: "rgb(253 224 71)" },
+  { name: "C", value: 20, color: "rgb(253 224 71)" },
 ];
-const cx = 75;
+const cx = 105;
 const cy = 75;
 const iR = 50;
 const oR = 80;
 const value = 90;
+<CountUp start={0} end={488} duration={3} />
 
 const needle = (
   value: number,
@@ -55,7 +57,7 @@ const needle = (
       key="path"
       d={`M${xba} ${yba}L${xbb} ${ybb} L${xp} ${yp} L${xba} ${yba}`}
       stroke="#none"
-      fill="#FFBB28"
+      fill="orange"
     />,
   ];
 };
@@ -72,7 +74,7 @@ const ChartNeedle: React.FC = () => {
         cy={cy}
         innerRadius={iR}
         outerRadius={oR}
-        paddingAngle={2}
+        paddingAngle={0}
         fill="#8884d8"
         stroke="none"
       >

@@ -5,6 +5,9 @@ import { WSSC_TYPES } from "../@types/WSSC'sSchema.type";
 import { Types } from "mongoose";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import { citizenModel } from "../Models/citizen.schema";
+import { SupervisorModel } from "../Models/supervisor.schema";
+import { ComplaintModel } from "../Models/complaint.schema";
 dotenv.config();
 
 // eslint-disable-next-line turbo/no-undeclared-env-vars
@@ -51,6 +54,7 @@ export const SignIn = async (
     // if (error) return res.send(error.details[0].message);
 
     try {
+        console.log("inside admin page")
         const admin:
             | (WSSC_TYPES & {
                 _id: Types.ObjectId;
@@ -77,7 +81,7 @@ export const SignIn = async (
                 message: "Password is incorrect",
             });
         // if the user credential is okay then we assign/send jwt token for authentication and authorization
-        const token = jwt.sign({ id: admin._id, name: admin.name, isAdmin: admin.isAdmin, orgCode:admin.WSSC_CODE }, SECRET_KEY)
+        const token = jwt.sign({ id: admin._id, name: admin.name, isAdmin: admin.isAdmin, WSSC_CODE:admin.WSSC_CODE }, SECRET_KEY)
         const { password, ...detail } = admin._doc;
 
         res.cookie("access_token", token, {
@@ -86,7 +90,7 @@ export const SignIn = async (
             .status(200)
             .json(detail);
     }catch(error) {
-        res.status(500).json({success: false, status: 500, errorMessage: error})
+        res.status(500).json({success: false, status: 500, error})
     }
 };
 
@@ -113,5 +117,63 @@ export const AdminLogout = async (
             success: false,
             message: error,
         });
+    }
+};
+
+// below controller is used to get the overall statistics on the basis of request/logged WSSC organization
+export const Statistics = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        
+        const users = await citizenModel.find(); // retrieve no of registered users
+        const supervisors = await SupervisorModel.find(); // retrieve no of superisors registered
+        const complaints = await ComplaintModel.find(); // retrieve no of registered complaints
+
+        // find no of type of complaints registered
+        const solidWasteComplaints = complaints.filter(complaint => complaint.complaintType === 'Solid waste').length;
+        const waterSupplyComplaints = complaints.filter(complaint => complaint.complaintType === 'Water Supply').length;
+        const wasteWaterComplaints = complaints.filter(complaint => complaint.complaintType === 'Waste water').length;
+        const staffComplaints = complaints.filter(complaint => complaint.complaintType === 'Staff').length;
+        const otherComplaints = complaints.filter(complaint => complaint.complaintType === 'Other').length;
+        const waterSanitation = waterSupplyComplaints + wasteWaterComplaints;; 
+// -------- getting current status of each complaints --------------------
+        const lastStatusArray = complaints.map(complaint => {
+            const lastStatusIndex = complaint.status.length - 1;
+            const lastStatus = complaint.status[lastStatusIndex];
+            return lastStatus;
+        });
+// ----- below filtering is used to get the current status of each complaint ----------
+        const initiatedStatus = lastStatusArray.filter(status => status.state === 'Initiated');
+        const inProgressStatus = lastStatusArray.filter(status => status.state === 'InProgress');
+        const completedStatus = lastStatusArray.filter(status => status.state === 'Completed');
+        const closedStatus = lastStatusArray.filter(status => status.state === 'Closed');
+
+         
+        res.status(200).json({
+            status: 200,
+            success: true,
+            record: {
+                users: users.length, 
+                supervisors: supervisors.length,
+                complaints: complaints.length,
+            },
+            complaints: {
+                solidWaste: solidWasteComplaints,
+                waterSanitation: waterSanitation,
+                Staff: staffComplaints,
+                Other: otherComplaints
+            },
+            complaintsStatus: {
+                Initiated: initiatedStatus.length,
+                InProgress: inProgressStatus.length,
+                Completed: completedStatus.length,
+                Closed: closedStatus.length,
+            }
+        });
+    } catch (error) {
+        res.status(404).json({ status: 404, success: false, message: error });
     }
 };
