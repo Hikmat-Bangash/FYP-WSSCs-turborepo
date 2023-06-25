@@ -1,5 +1,5 @@
 "use client";
-import { RootState } from "@/app/GlobalState/store";
+import { RootState } from "@/GlobalState/store";
 import React from "react";
 import ReactApexChart from "react-apexcharts";
 import { useSelector } from "react-redux";
@@ -15,23 +15,23 @@ const ApexChart = () => {
   const series = [
     {
       name: "Solid waste",
-      data: [complaints?.solidWaste, 0, 0, 0],
+      data: [complaints?.solidWaste || 0, 0, 0, 0],
     },
     {
       name: "Water sanitation",
-      data: [complaints?.waterSanitation, 0, 0, 0],
+      data: [complaints?.waterSanitation || 0, 0, 0, 0],
     },
     {
       name: "Staff related",
-      data: [complaints?.Staff, 0, 0, 0],
+      data: [complaints?.Staff || 0, 0, 0, 0],
     },
     {
       name: "Other complaint",
-      data: [complaints?.Other, 0, 0, 0],
+      data: [complaints?.Other || 0, 0, 0, 0],
     },
   ];
 
-  const options:any = {
+  const options: any = {
     chart: {
       type: "bar",
       height: 250,

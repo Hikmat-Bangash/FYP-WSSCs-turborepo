@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Image from "next/image";
-import { BiUserCircle } from "react-icons/bi";
+import { BiLogOutCircle, BiUserCircle } from "react-icons/bi";
 import { FiShare2 } from "react-icons/fi";
 import { MdOutlinePrivacyTip } from "react-icons/md";
 import { AiOutlineFileProtect } from "react-icons/ai";
@@ -88,14 +88,20 @@ const ProfileMenu = ({ menuActive, setMenuActive }: Props) => {
           </button>
 
           <button
-            onClick={() => NotifyTost()}
+            onClick={() => {
+              setMenuActive(!menuActive);
+              navigate.push("/contact");
+            }}
             className="flex items-center gap-2 text-md font-semibold"
           >
             <MdOutlineContactPhone className="text-[20px] text-primaryColor-500" />
             <span className="text-gray-700 ml-1">Contact us</span>
           </button>
           <button
-            onClick={() => NotifyTost()}
+            onClick={() => {
+              setMenuActive(!menuActive);
+              navigate.push("/privacypolicy");
+            }}
             className="flex items-center gap-2 text-md font-semibold"
           >
             <MdOutlinePrivacyTip className="text-[24px] text-primaryColor-500" />
@@ -103,7 +109,10 @@ const ProfileMenu = ({ menuActive, setMenuActive }: Props) => {
           </button>
 
           <button
-            onClick={() => NotifyTost()}
+            onClick={() => {
+              setMenuActive(!menuActive);
+              navigate.push("/termsandconditions");
+            }}
             className="flex items-center gap-2 text-md font-semibold"
           >
             <AiOutlineFileProtect className="text-[24px] text-primaryColor-500" />
@@ -111,13 +120,18 @@ const ProfileMenu = ({ menuActive, setMenuActive }: Props) => {
           </button>
         </div>
 
-        <button
-          onClick={LogOut}
-          className="flex items-center gap-2 text-md -mt-4 font-semibold"
-        >
-          <TbLogout className="text-[24px] text-primaryColor-500" />
-          <span className="text-gray-700">Log out</span>
-        </button>
+        {/* Logout button */}
+        <div className="logout  w-full ">
+          <button
+            className="text-lg px-3 py-1 rounded-full flex justify-center items-center w-[80%] tracking-wide bg-white text-red-500 border border-red-500 active:bg-red-500 active:text-white"
+            onClick={LogOut}
+          >
+            <span>
+              <BiLogOutCircle className="text-xl mr-3" />
+            </span>
+            <span>Logout</span>
+          </button>
+        </div>
       </div>
 
       {sharePop && <ShareApp sharePop={sharePop} setSharePop={setsharePop} />}

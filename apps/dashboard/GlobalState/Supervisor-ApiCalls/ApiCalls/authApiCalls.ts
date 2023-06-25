@@ -1,15 +1,14 @@
 import axios from "axios";
 import { config } from "../../config";
-import { ApiFetchingError, ApiFetchingStart, SignInSuccess, SupervisorLogout } from "./supervisorSlice/AuthSlice";
+import { ApiFetchingError, ApiFetchingStart, SignInSuccess, SupervisorLogout, UpdateProfile } from "./supervisorSlice/AuthSlice";
 
 const API = axios.create({ baseURL: "http://localhost:7000" });
 
 // Sign In Supervisor
 export const SupervisorSignIn = async (UserData: any, dispatch: any) => {
-    console.log(UserData);
     const { phone, password } = UserData;
     // SignIn start action
-    dispatch(ApiFetchingStart);
+    // dispatch(ApiFetchingStart);
     try {
         // calling api to check the credentials
         const res = await API.post(
@@ -18,7 +17,7 @@ export const SupervisorSignIn = async (UserData: any, dispatch: any) => {
             config
         );
         dispatch(SignInSuccess(res.data));
-        console.log(res);
+        console.log(res.data);
         return res;
     } catch (err: any) {
         console.log(err);
@@ -35,9 +34,26 @@ export const SupervisorSignIn = async (UserData: any, dispatch: any) => {
     }
 };
 
+// ----- update supervisor profile ------------
+export const UpdateSupervisor = async (dispatch: any, data:any ) => {
+    dispatch(ApiFetchingStart);
+    try {
+        const res = await API.patch(`api/v1/supervisors/${data.suprvisorId}`, { profile_image: data.updatedpic.profile_image }, config);
+        dispatch(UpdateProfile(res.data.data))
+        return res.status;
+    } catch (err: any) {
+        console.log(err)
+        if (err?.response?.status == 500) {
+            dispatch(ApiFetchingError("Server error, please try again later"));
+            return err?.response?.status;
+       }
+    }
+}
+
+
+
 // supervisor logout
 export const SupervisorLogoutApi = async (dispatch: any) => {
-   
     // SignIn start action
     dispatch(ApiFetchingStart);
     try {

@@ -5,19 +5,14 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
-// import { SignInUser } from "@/app/GlobalState/UserSlice";
-// import { SignInUser } from "../GlobalState/UserSlice";
-import { SignIn } from "../../app/GlobalState/ApiCalls/authApiCalls";
+import { SignIn } from "../../GlobalState/ApiCalls/authApiCalls";
 import { useSelector } from "react-redux";
-import { RootState } from "@/app/GlobalState/store";
+import { RootState } from "@/GlobalState/store";
 import { MdSupervisorAccount } from "react-icons/md";
 import { RiAdminFill } from "react-icons/ri";
-import Link from "next/link";
-import { SupervisorSignIn } from "../GlobalState/Supervisor-ApiCalls/ApiCalls/authApiCalls";
+import { SupervisorSignIn } from "../../GlobalState/Supervisor-ApiCalls/ApiCalls/authApiCalls";
 
-type Props = {};
-
-const Auth = (props: Props) => {
+const Auth = () => {
   const [admin, setadmin] = useState(true);
   const dispatch = useDispatch();
   const navigate = useRouter();
@@ -32,9 +27,15 @@ const Auth = (props: Props) => {
 
   const onSubmit = async (data: any) => {
     if (admin) {
-      SignIn(data, dispatch);
-      navigate.push("/");
-      reset();
+      try {
+        const res = await SignIn(data, dispatch);
+        if (res?.status == 200) {
+          navigate.push("/");
+          reset();
+        }
+      } catch (error) {
+        console.log(error);
+      }
     } else {
       try {
         const res = await SupervisorSignIn(

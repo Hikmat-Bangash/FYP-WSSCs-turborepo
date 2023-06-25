@@ -1,3 +1,4 @@
+
 import axios from "axios";
 import {
   GetComplaintsStart,
@@ -10,11 +11,22 @@ import {
   FeedbackSuccess,
   FeedbackError,
 } from "../ReduxSlices/complaintSlice";
-import { config } from "./config";
+// import { config } from "./config";
 import { ComplainForm } from "@/@types/complainForm.types";
 
-export const API = axios.create({ baseURL: "http://localhost:7000" });
-// const API = axios.create({ baseURL: "https://fyp-wssc-backend-production.up.railway.app" });
+// export const API = axios.create({ baseURL: "http://localhost:7000" });
+const API = axios.create({ baseURL: "https://fyp-backend-production-27a1.up.railway.app/" });
+if (typeof window !== 'undefined') {
+  // Perform localStorage action
+  const token: any = localStorage.getItem("token");
+   var config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+}
+
+};
 
 // Citizen feedback
 export const CreateFeedback = async (
@@ -56,6 +68,7 @@ export const CreateComplaint = async (
     userName,
     complaintType,
     phone,
+    WSSC_CODE,
     complaintAddress,
     complaintDes,
     ImageUrl,
@@ -72,6 +85,7 @@ export const CreateComplaint = async (
         userName,
         complaintType,
         phone,
+        WSSC_CODE,
         complaintAddress,
         complaintDes,
         ImageUrl,
@@ -85,9 +99,11 @@ export const CreateComplaint = async (
   } catch (err: any) {
     if (err.response?.status == 400) {
       dispatch(NewComplaintError(err.response.data));
+      console.log(err)
       return err.response;
     } else if (err.response.status == 500) {
       dispatch(NewComplaintError(err.response.statusText));
+      console.log(err)
       return err.response;
     }
   }

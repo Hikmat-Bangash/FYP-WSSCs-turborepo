@@ -9,6 +9,7 @@ export const Suprvisor_Slice = createSlice({
         pending: false,
         error: false,
         SupervisorSiginData: {},
+        WSSC: {},
     },
     reducers: {
         // below is the generic action which calls for every api endpoints hit
@@ -18,13 +19,20 @@ export const Suprvisor_Slice = createSlice({
 // below action indicate the supervisor successfully signedIn
         SignInSuccess: (state, action) => {
             state.pending = false;
-            state.SupervisorSiginData = action.payload;
+            state.SupervisorSiginData = action.payload.supervisor;
+            state.WSSC = action.payload.WSSC;
           
             toast.success("Signed in successfully", {
                 position: "top-center",
                 style: { width: "auto", height: "auto" },
                 duration: 3000,
             });
+        },
+
+// -------------- Update Supervisor profile ---------------
+        UpdateProfile: (state, action) => {
+            state.pending = false;
+            state.SupervisorSiginData = action.payload;
         },
 
 // supervisor logout 
@@ -56,6 +64,7 @@ export const {
     ApiFetchingStart,
     SignInSuccess,
     ApiFetchingError,
-    SupervisorLogout
+    SupervisorLogout,
+    UpdateProfile
 } = Suprvisor_Slice.actions;
 export default Suprvisor_Slice.reducer;

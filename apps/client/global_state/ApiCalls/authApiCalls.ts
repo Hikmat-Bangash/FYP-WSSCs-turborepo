@@ -1,3 +1,4 @@
+
 import axios, { AxiosError } from "axios";
 import {
   SignInStart,
@@ -18,11 +19,21 @@ import {
   DeleteAccountSuccess,
   DeleteAccountError
 } from "../ReduxSlices/UserSlice";
-import { config } from "./config";
+// import { config } from "./config";
 
-const API = axios.create({ baseURL: "http://localhost:7000" });
-// const API = axios.create({ baseURL: "https://fyp-wssc-backend-production.up.railway.app" });
+if (typeof window !== 'undefined') {
+  // Perform localStorage action
+  const token: any = localStorage.getItem("token");
+  var config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  }
 
+};
+// const API = axios.create({ baseURL: "http://localhost:7000" });
+const API = axios.create({ baseURL: "https://fyp-backend-production-27a1.up.railway.app/" });
 
 // RegisterUser ApiCall
 export const RegisterUser = async (
@@ -36,11 +47,12 @@ export const RegisterUser = async (
   try {
     const res = await API.post(
       "api/v1/auth/signup",
-      { name, phone, password, wssc_code },
+      { name, phone, password, WSSC_CODE:wssc_code },
       { withCredentials: true }
     );
+    console.log(res)
     dispatch(SignUpSuccess(res.data));
-    return res.status;
+    return res;
   } catch (err: any) {
     if (err.response) {
       if (err.response.status == 400) {
@@ -62,6 +74,7 @@ export const SignIn = async (UserData: user, dispatch: any) => {
   try {
     // calling api to check the credentials
     const res = await API.post("api/v1/auth/signin", { phone, password }, config);
+    console.log(res.data)
     dispatch(SignInSuccess(res.data));
   } catch (err: any) {
     if (err.response) {
