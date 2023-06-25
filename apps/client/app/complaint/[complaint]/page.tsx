@@ -78,7 +78,7 @@ const Page: React.FC = ({ params }: any) => {
   };
 
   const GoHomePage = () => {
-    Navigate.push("/");
+    Navigate.back();
   };
 
   // upload media attachments in optimized way
@@ -92,6 +92,7 @@ const Page: React.FC = ({ params }: any) => {
       data.append("upload_preset", "xguxdutu");
       data.append("cloud_name", "dgpwe8xy6");
       data.append("folder", "complaint");
+      data.append("quality", "auto:good"); // Set the desired quality level
 
       try {
         let response;
@@ -298,8 +299,13 @@ const Page: React.FC = ({ params }: any) => {
               ref={imageRef}
               onChange={UploadAttachments}
               type="file"
-              capture="environment"
               name="image"
+              capture="environment"
+              onClick={(e) => {
+                const target = e.target as HTMLInputElement;
+                target.value = ""; // Reset the selected file
+                target.removeAttribute("capture"); // Remove the capture attribute to allow gallery selection
+              }}
             />
           </div>
 
@@ -309,9 +315,13 @@ const Page: React.FC = ({ params }: any) => {
               ref={videoRef}
               onChange={UploadAttachments}
               type="file"
-              capture="environment"
-              // onDurationChange={CheckingDuration()}
               name="video"
+              capture="environment"
+              onClick={(e) => {
+                const target = e.target as HTMLInputElement;
+                target.value = ""; // Reset the selected file
+                target.removeAttribute("capture"); // Remove the capture attribute to allow gallery selection
+              }}
             />
           </div>
           {/* ---------------------- END input sectons ------------------ */}
