@@ -11,16 +11,6 @@ const API = axios.create({
   baseURL: "https://fyp-backend-production-27a1.up.railway.app/",
 });
 
-// if (typeof window !== "undefined") {
-//   // Perform localStorage action
-//   const token: any = localStorage.getItem("adminToken");
-//   var config = {
-//     headers: {
-//       "Content-Type": "application/json",
-//       Authorization: `Bearer ${token}`,
-//     },
-//   };
-// }
 // GET ALL USERS
 export const FetchUsers = async (dispatch: any, token:any): Promise<any> => {
   dispatch(ApiRequestStart());

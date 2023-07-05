@@ -8,7 +8,7 @@ import { BsCaretLeftSquareFill, BsCaretRightSquareFill } from "react-icons/bs";
 import { setActiveTab } from "@/GlobalState/TabSlice";
 import { FetchUsers } from "@/GlobalState/ApiCalls/userApiCalls";
 import { RootState } from "@/GlobalState/store";
-import { ColorRing, RotatingLines } from "react-loader-spinner";
+import { ColorRing } from "react-loader-spinner";
 import { MdClose } from "react-icons/md";
 import Image from "next/image";
 
@@ -22,12 +22,11 @@ function Users() {
   const { pending, error, adminToken }: any = useSelector((state: RootState) => state.User);
   const [success, setSuccess] = useState(error);
 
-  useEffect(() => {
-    FetchUsers(dispatch, adminToken);
-  }, []);
 
   const users: any = useSelector((state: RootState) => state.User.users);
   const user = users.find((u: any) => u?._id == userid);
+
+  // pagination
   const selectPagehandler = (selectedPage: any) => {
     if (
       selectedPage >= 1 &&
@@ -46,9 +45,18 @@ function Users() {
     setModal(true);
   };
 
+  useEffect(() => {
+    const FetchingCitizens = async () => {
+      await FetchUsers(dispatch, adminToken);
+    }
+
+    FetchingCitizens();
+  }, []);
+
+  // JSX SECTION
   return (
     <>
-      {WSSC_CODE && (
+      {WSSC_CODE && users && (
         <div className="relative container flex flex-col gap-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4  text-md">
