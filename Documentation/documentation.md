@@ -25,10 +25,9 @@ Community Cleanup
 
 
 
-
 Supervised by:  Engr. Lubna Gul
 
-Signatures of Supervisor: \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+External Supervised by:  Arsala Bangash
 
 **
 
@@ -66,7 +65,6 @@ To ensure the effectiveness and usability of the system, extensive usability tes
 
 Future work includes the development of a mobile application to extend accessibility, integration with the existing WSSC infrastructure, enhanced reporting and analytics capabilities, expansion to other WSSCs, integration of advanced technologies, and community engagement programs. These efforts will further enhance the system's functionality, adaptability, and impact, providing a robust framework for efficient waste and complaint management.
 
-Overall, this system serves as a promising solution to the waste management and complaint management challenges faced by WSSCs in Pakistani cities. By harnessing technology and citizen participation, it aims to create a more sustainable and responsive environment, fostering improved service delivery and community well-being.
 
 **FYP Report Approval**</sub> 
 
@@ -106,7 +104,7 @@ Engr. Lubna Gul
 
 ![](Aspose.Words.bd54d783-b3c4-4434-b1e7-b2b0c3dd9d26.003.png)![](Aspose.Words.bd54d783-b3c4-4434-b1e7-b2b0c3dd9d26.004.png)
 
-Name of Supervisor:      				Signature
+Name of Supervisor:                             				Signature
 
 **Acknowledgment** 
 
@@ -134,7 +132,7 @@ Name of Supervisor:      				Signature
 
 **List of Abbreviations** 
 
-**Abbreviation 	 	 	            Expansion** 
+**Abbreviation 	 	 	                                     Expansion** 
 
 WSSC                                                    Water and Sanitation Service Company
 
