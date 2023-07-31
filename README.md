@@ -22,7 +22,7 @@ usability testing and evaluation have been conducted, including
 guerrilla usability testing with diverse users. The findings have
 revealed positive outcomes, demonstrating the system\'s ability to
 enhance citizen engagement, expedite complaint resolution, and
-contribute to a cleaner and healthier environment.
+contribute to a cleaner and healthier environment. 
 
 Future work includes the development of a mobile application to extend
 accessibility, integration with the existing WSSC infrastructure,
