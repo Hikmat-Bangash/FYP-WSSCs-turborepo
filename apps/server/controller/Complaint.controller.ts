@@ -61,12 +61,12 @@ export const GetComplaint = async (
   try {
     const complaint:
       | (IComplaint & {
-          _id: Types.ObjectId;
-          _doc: any;
-        })
+        _id: Types.ObjectId;
+        _doc: any;
+      })
       | null = await ComplaintModel.findById({
-      _id: complaintId,
-    });
+        _id: complaintId,
+      });
     res.status(200).json({
       status: 200,
       success: true,

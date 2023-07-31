@@ -12,7 +12,6 @@ export const UpdateUser = async (
 ) => {
   const userId: string = req.params.id;
   const citizenId: string = req.user.id;
-  console.log(req.body);
   if (userId == citizenId || req.user.isAdmin) {
     try {
       const updateInfo:
@@ -119,7 +118,7 @@ export const DeleteAccount = async (
         // after deleting accound from DB, we need to clear cookie as well
         res
           .clearCookie("access_token", {
-            sameSite: "none",
+            sameSite: "none", 
           })
           .status(200)
           .json({
