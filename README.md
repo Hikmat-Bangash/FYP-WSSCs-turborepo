@@ -1,4 +1,4 @@
-**ABSTRACT**
+#  **ABSTRACT**
 
 This project presents the development of a comprehensive system aimed at
 addressing the waste management and complaint management issues in WSSCs
@@ -32,7 +32,8 @@ These efforts will further enhance the system\'s functionality,
 adaptability, and impact, providing a robust framework for efficient
 waste and complaint management.
 
-##  **INTRODUCTION**
+## 
+#  **INTRODUCTION**
 
 People living on earth depend on nature to provide them with the
 resources they need to survive: air, water, food, fibre, medicines, and
@@ -70,7 +71,8 @@ To solve these issues, we have developed a system that allow citizens to
 make complaints of different types, which highlights problems faced by
 common citizens.
 
-## **PROBLEM STATEMENT**
+##
+# **PROBLEM STATEMENT**
 
 Most Pakistani cities lack effective waste management systems, from
 collection to disposal. Due to a shortage of disposal locations, a lot
@@ -98,7 +100,8 @@ file the complaint, and the rest of the process is also manual.
 We intend to develop a system that makes it easy for the user to use and
 put their problems forward.
 
-## **PROPOSED SOLUTION** 
+##
+# **PROPOSED SOLUTION** 
 
 To solve the above issues, we have developed a system that aims to
 revolutionize the operations of all water and sanitation services
@@ -113,7 +116,8 @@ and responsibilities. This project seeks to elevate the overall
 performance of WSSCs, enabling them to deliver exceptional services to
 their respective communities.
 
-## **SCOPE**
+## 
+# **SCOPE**
 
 -   This system is a generic system developed for all the WSSCs.
 
@@ -125,10 +129,9 @@ their respective communities.
 -   This system provides a mode of communication between citizens and
     relevant WSSC organization through filing complaints, addressing,
     and managing them.
-
 ## 
 
-##  **OBJECTIVES**
+#  **OBJECTIVES**
 
 The main objectives of our proposed system are as follows:
 
